@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-class Grid extends React.Component {
+
+class Grid extends React.Component { //represents the connect-4 grid
 
     constructor(props) {
         super(props);
@@ -11,13 +12,13 @@ class Grid extends React.Component {
       }
 
 
-    renderSquare(i) {
+    renderSquare(i) { //method used to set the value of the square as well as trigger handleClick
         return <Square value={this.state.squares[i]}  onClick={() => this.handleClick(i)}/>
     }
 
-    handleClick(i) {
+    handleClick(i) { //method used to set the state of the square as well as establish the next player's turn
         const squares = this.state.squares.slice();
-        if (calculateWinner(squares) || squares[i]) {
+        if (determineWinner(squares) || squares[i]) {
             return;
         }
         squares[i] = this.state.xIsNext ? 'Yellow' : 'Red';
@@ -27,9 +28,9 @@ class Grid extends React.Component {
         });
       }
 
-    render() {
+    render() { //render method
 
-        const winner = calculateWinner(this.state.squares);
+        const winner = determineWinner(this.state.squares); //check if a winner is found
         let status;
         if (winner) {
           status = 'Winner: ' + winner;
@@ -37,7 +38,7 @@ class Grid extends React.Component {
             status = 'Next player: ' + (this.state.xIsNext ? 'Yellow' : 'Red');
         }
 
-        return(
+        return( //render the 6x7 grid
             <div>
                 <div className="status">{status}</div>
                 <div className="grid-row">
@@ -100,7 +101,7 @@ class Grid extends React.Component {
     }
 }
 
-class Game extends React.Component {
+class Game extends React.Component { //represents the concept of a game
     render() {
         return (
             <div className="game">
@@ -116,7 +117,7 @@ class Game extends React.Component {
     }
 }
 
-function Square(props) {
+function Square(props) { //function component representing a square 
     var bgColour;
     if (props.value == "Yellow") {
             bgColour = 'yellow'
@@ -133,7 +134,7 @@ function Square(props) {
     );
 }
 
-function calculateWinner(squares){
+function determineWinner(squares){ //function used to determine if a winner is found with all of the winning combinations
     const lines = [
         [0, 1, 2, 3],
         [1, 2, 3, 4],
@@ -183,7 +184,7 @@ function calculateWinner(squares){
     ];
     for (let i = 0; i < lines.length; i++) {
         const [a, b, c, d] = lines[i];
-        if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c] && squares[a] === squares[d]) {
+        if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c] && squares[a] === squares[d]) { //finding four in a row of all of the possible combinations
           return squares[a];
         }
       }
