@@ -38,7 +38,7 @@ class Grid extends React.Component { //represents the connect-4 grid
             status = 'Next player: ' + (this.state.xIsNext ? 'Yellow' : 'Red');
         }
 
-        return( //render the 6x7 grid
+        return( //render the 6 x 7 grid
             <div>
                 <div className="status">{status}</div>
                 <div className="grid-row">
